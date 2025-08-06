@@ -7,6 +7,11 @@ export type Product = {
   image: string // Vorschaubild (Startseite etc.)
   images: string[] // Galerie (Detailansicht)
   description: string
+  category: string
+  rating: {
+    rate: number
+    count: number
+  }
 }
 
 export const useProductStore = defineStore('product', {

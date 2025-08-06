@@ -3,7 +3,31 @@
     <div>
       <ProductGallery v-if="product?.images?.length" :images="product.images" />
     </div>
-    <div>Description Container</div>
+    <div>
+      <p class="text-lg font-semibold rounded border inline-block p-1">{{ product?.category }}</p>
+      <h2 class="text-4xl font-bold mb-2 my-8">{{ product?.title }}</h2>
+      <!-- Rating Begin-->
+      <div class="flex items-center mb-4">
+        <div class="flex items-center gap-1 text-yellow-500 text-lg mr-4">
+          <span v-for="n in fullStars" :key="'full-' + n">★</span>
+          <span v-if="hasHalfStar">☆</span>
+          <span v-for="n in emptyStars" :key="'empty-' + n" class="opacity-30">★</span>
+        </div>
+        <p class="text-sm text-white mr-8">[{{ product?.rating?.rate }} / 5 ]</p>
+        <p class="text-sm text-white">{{ product?.rating?.count }} Bewertungen</p>
+      </div>
+      <!-- Rating End -->
+
+      <p class="text-2xl font-semibold my-8">{{ product?.price.toFixed(2) }} €</p>
+
+      <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full mb-8">
+        In den Warenkorb
+      </button>
+      <p class="text-white">Description:</p>
+      <ul class="list-disc list-inside text-white my-4">
+        <li v-for="(item, index) in descriptionItems" :key="index">{{ item }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -18,4 +42,21 @@ const productStore = useProductStore()
 const productId = computed(() => Number(route.params.id))
 
 const product = computed(() => productStore.products.find((p) => p.id === productId.value))
+
+const descriptionItems = computed(() =>
+  product.value?.description
+    ?.split(/[.,;]/) // trennt bei Punkt, Komma oder Semikolon
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0),
+)
+
+// Rating calculations
+const fullStars = computed(() => Math.floor(product.value?.rating?.rate || 0))
+const hasHalfStar = computed(() => {
+  const rate = product.value?.rating?.rate || 0
+  return rate - Math.floor(rate) >= 0.5
+})
+const emptyStars = computed(() => 5 - fullStars.value - (hasHalfStar.value ? 1 : 0))
+
+console.log('Product Detail:', product.value)
 </script>
