@@ -4,7 +4,8 @@ export type Product = {
   id: number
   title: string
   price: number
-  image: string
+  image: string // Vorschaubild (Startseite etc.)
+  images: string[] // Galerie (Detailansicht)
   description: string
 }
 
@@ -27,7 +28,20 @@ export const useProductStore = defineStore('product', {
         }
         const data = await response.json()
 
-        this.products = data
+        this.products = data.map((product: Product) => {
+          const imageArray = [
+            product.image,
+            `${product.image}?v=1`,
+            `${product.image}?v=2`,
+            `${product.image}?v=3`,
+          ]
+
+          return {
+            ...product,
+            image: product.image, // für Startseite ein Bild
+            images: imageArray, // für Produktdetailseite mehrere Bilder
+          }
+        })
       } catch (err: Error | unknown) {
         if (err instanceof Error) {
           this.error = err.message

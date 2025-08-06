@@ -1,13 +1,9 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div>Image Container</div>
+    <div>
+      <ProductGallery v-if="product?.images?.length" :images="product.images" />
+    </div>
     <div>Description Container</div>
-  </div>
-
-  <div v-if="product">
-    <h1>{{ product.title }}</h1>
-    <p>{{ product.description }}</p>
-    <p>Price: {{ product.price }}</p>
   </div>
 </template>
 
@@ -15,6 +11,7 @@
 import { useRoute } from 'vue-router'
 import { useProductStore } from '@/stores/productStore'
 import { computed } from 'vue'
+import ProductGallery from '@/components/ProductGallery.vue'
 
 const route = useRoute()
 const productStore = useProductStore()
