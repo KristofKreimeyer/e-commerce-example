@@ -20,7 +20,19 @@
 
       <p class="text-2xl font-semibold my-8">{{ product?.price.toFixed(2) }} €</p>
 
-      <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full mb-8">
+      <button
+        @click="
+          product &&
+          cart.addToCart({
+            id: product.id,
+            name: product.title,
+            price: product.price,
+            quantity: 1,
+            image: product.image,
+          })
+        "
+        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full mb-8"
+      >
         In den Warenkorb
       </button>
       <p>Description:</p>
@@ -63,4 +75,7 @@ onMounted(() => {
     productStore.fetchProducts()
   }
 })
+
+import { useCartStore } from '@/stores/cartStore'
+const cart = useCartStore()
 </script>

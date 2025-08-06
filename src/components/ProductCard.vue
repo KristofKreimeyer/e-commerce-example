@@ -9,7 +9,18 @@
       <h2 class="text-lg font-semibold">{{ product.title }}</h2>
       <p class="text-gray-600 line-clamp-3">{{ product.description }}</p>
       <p class="text-xl font-bold mt-2">{{ product.price.toFixed(2) }} €</p>
-      <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+      <button
+        @click="
+          cart.addToCart({
+            id: product.id,
+            name: product.title,
+            price: product.price,
+            quantity: 1,
+            image: product.image,
+          })
+        "
+        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 hover:cursor-pointer"
+      >
         In den Warenkorb
       </button>
     </div>
@@ -18,6 +29,8 @@
 
 <script setup lang="ts">
 import type { Product } from '@/stores/productStore'
+import { useCartStore } from '@/stores/cartStore'
+const cart = useCartStore()
 
 defineProps<{ product: Product }>()
 </script>
