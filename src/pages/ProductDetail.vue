@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { useProductStore } from '@/stores/productStore'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import ProductGallery from '@/components/ProductGallery.vue'
 
 const route = useRoute()
@@ -58,5 +58,9 @@ const hasHalfStar = computed(() => {
 })
 const emptyStars = computed(() => 5 - fullStars.value - (hasHalfStar.value ? 1 : 0))
 
-console.log('Product Detail:', product.value)
+onMounted(() => {
+  if (!product.value) {
+    productStore.fetchProducts()
+  }
+})
 </script>
