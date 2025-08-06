@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-800 text-white p-4">
+  <footer class="bg-gray-800 text-white p-4 fixed bottom-0 w-full">
     <p>&copy; 2023 My Company</p>
   </footer>
 </template>

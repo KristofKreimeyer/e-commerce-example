@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen w-full bg-amber-800 flex flex-col text-gray-900">
+  <div class="min-h-screen w-full flex flex-col text-gray-900">
     <!-- Globaler Header mit Navigationslink -->
     <!-- <Header /> -->
     <AppHeader />

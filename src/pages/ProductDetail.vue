@@ -13,8 +13,8 @@
           <span v-if="hasHalfStar">☆</span>
           <span v-for="n in emptyStars" :key="'empty-' + n" class="opacity-30">★</span>
         </div>
-        <p class="text-sm text-white mr-8">[{{ product?.rating?.rate }} / 5 ]</p>
-        <p class="text-sm text-white">{{ product?.rating?.count }} Bewertungen</p>
+        <p class="text-sm mr-8">[{{ product?.rating?.rate }} / 5 ]</p>
+        <p class="text-sm">{{ product?.rating?.count }} Bewertungen</p>
       </div>
       <!-- Rating End -->
 
@@ -23,8 +23,8 @@
       <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full mb-8">
         In den Warenkorb
       </button>
-      <p class="text-white">Description:</p>
-      <ul class="list-disc list-inside text-white my-4">
+      <p>Description:</p>
+      <ul class="list-disc list-inside my-4">
         <li v-for="(item, index) in descriptionItems" :key="index">{{ item }}</li>
       </ul>
     </div>

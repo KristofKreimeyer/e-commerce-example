@@ -70,6 +70,9 @@ const modules = [FreeMode, Navigation, Thumbs]
   width: 100%;
   max-width: 500px; /* optional: begrenze Breite auf Desktop */
   margin: 0 auto;
+  background-color: #eceef0; /* optional: Hintergrundfarbe */
+  border-radius: 5%;
+  padding: 20px;
 }
 
 /* Bilder im Haupt-Slider */
@@ -85,7 +88,7 @@ const modules = [FreeMode, Navigation, Thumbs]
 .mySwiper {
   height: auto;
   box-sizing: border-box;
-  padding: 10px 0;
+  margin-top: 50px;
 }
 
 /* Thumbnail-Bilder */
@@ -93,6 +96,9 @@ const modules = [FreeMode, Navigation, Thumbs]
   aspect-ratio: 1 / 1; /* quadratische Thumbnails */
   opacity: 0.4;
   transition: opacity 0.3s ease;
+  background-color: #eceef0; /* optional: Hintergrundfarbe */
+  border-radius: 5%;
+  padding: 20px;
 }
 
 /* Aktives Thumbnail */
