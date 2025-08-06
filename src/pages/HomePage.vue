@@ -13,13 +13,16 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useProductStore } from '@/stores/productStore'
 import ProductCard from '@/components/ProductCard.vue'
 
 const productStore = useProductStore()
-const { products, loading, error, fetchProducts } = productStore
+const { products, loading, error } = storeToRefs(productStore)
 
 onMounted(() => {
-  if (products.length === 0) fetchProducts()
+  if (!products.value.length) {
+    productStore.fetchProducts()
+  }
 })
 </script>
