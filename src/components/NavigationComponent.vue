@@ -3,20 +3,27 @@
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex justify-between items-center py-4">
         <div class="flex items-center space-x-4">
-          <div class="text-2xl font-semibold apple-text">ShopHub</div>
+          <div class="text-2xl font-semibold apple-text">
+            <router-link to="/">ShopHub</router-link>
+          </div>
         </div>
 
         <div class="hidden md:flex items-center space-x-10 text-sm font-medium">
-          <a href="#" class="apple-text hover:text-blue-600 transition-colors duration-300">Home</a>
-          <a href="#" class="apple-text hover:text-blue-600 transition-colors duration-300"
-            >Kategorien</a
+          <router-link
+            to="/catalog"
+            class="apple-text hover:text-blue-600 transition-colors duration-300"
           >
-          <a href="#" class="apple-text hover:text-blue-600 transition-colors duration-300">Sale</a>
-          <a href="#" class="apple-text hover:text-blue-600 transition-colors duration-300"
-            >Support</a
+            Kategorien
+          </router-link>
+          <router-link
+            to="/support"
+            class="apple-text hover:text-blue-600 transition-colors duration-300"
           >
+            Support
+          </router-link>
         </div>
 
+        <!-- Wishlist -->
         <div class="flex items-center space-x-3">
           <button
             class="p-2.5 text-gray-600 hover:text-blue-600 hover:bg-gray-100/50 rounded-full transition-all duration-300"
@@ -24,13 +31,16 @@
             <Heart class="h-5 w-5" />
           </button>
 
+          <!-- Login -->
           <button
             class="p-2.5 text-gray-600 hover:text-blue-600 hover:bg-gray-100/50 rounded-full transition-all duration-300"
           >
             <User class="h-5 w-5" />
           </button>
 
-          <button
+          <!-- Cart -->
+          <router-link
+            to="/cart"
             class="relative p-2.5 text-gray-600 hover:text-blue-600 hover:bg-gray-100/50 rounded-full transition-all duration-300"
           >
             <ShoppingBag class="h-5 w-5" />
@@ -40,7 +50,7 @@
             >
               {{ cartCount }}
             </span>
-          </button>
+          </router-link>
         </div>
       </div>
     </div>
