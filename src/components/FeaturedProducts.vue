@@ -60,12 +60,15 @@
 
               <div class="flex items-center justify-between">
                 <span class="text-xl font-semibold apple-text"> €{{ product.price }} </span>
-                <button
+                <ButtonComponent
+                  type="button"
+                  size="md"
+                  :disabled="false"
                   @click.stop="addToCart(product)"
-                  class="apple-button text-white px-6 py-2.5 rounded-full text-sm font-medium flex items-center space-x-2 hover:scale-105 transition-transform"
+                  variant="outline"
                 >
                   <Plus class="w-4 h-4" />
-                </button>
+                </ButtonComponent>
               </div>
             </div>
           </div>
@@ -80,6 +83,7 @@ import { useCartStore } from '@/stores/cartStore'
 import { useProductStore, type Product } from '@/stores/productStore'
 import { computed, onMounted, ref } from 'vue'
 import { Heart, Plus, Star } from 'lucide-vue-next'
+import ButtonComponent from './ButtonComponent.vue'
 
 const cartStore = useCartStore()
 const productStore = useProductStore()
