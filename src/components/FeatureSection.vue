@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
         <div class="text-center">
           <div
-            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+            class="w-16 h-16 bg-gradient-to-br from-blue-300 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
           >
             <Truck class="w-8 h-8 text-white" />
           </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="text-center">
           <div
-            class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+            class="w-16 h-16 bg-gradient-to-br from-green-300 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
           >
             <ShieldCheck class="w-8 h-8 text-white" />
           </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="text-center">
           <div
-            class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+            class="w-16 h-16 bg-gradient-to-br from-purple-300 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
           >
             <RotateCcw class="w-8 h-8 text-white" />
           </div>
@@ -39,3 +39,7 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+import { Truck, ShieldCheck, RotateCcw } from 'lucide-vue-next'
+</script>

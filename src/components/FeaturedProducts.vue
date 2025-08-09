@@ -21,14 +21,14 @@
               <button
                 class="absolute top-4 right-4 w-10 h-10 bg-white/80 apple-blur rounded-full flex items-center justify-center hover:bg-white transition-all duration-300"
               >
-                <!-- <Heart
-                    :class="[
-                      'w-5 h-5 transition-colors',
-                      wishlist.includes(product.id)
-                        ? 'text-red-500 fill-red-500'
-                        : 'text-gray-600 hover:text-red-500',
-                    ]"
-                  /> -->
+                <Heart
+                  :class="[
+                    'w-5 h-5 transition-colors',
+                    wishlist.includes(product.id)
+                      ? 'text-red-500 fill-red-500'
+                      : 'text-gray-600 hover:text-red-500',
+                  ]"
+                />
               </button>
             </div>
 
@@ -78,10 +78,14 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cartStore'
 import { useProductStore, type Product } from '@/stores/productStore'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { Heart, Plus, Star } from 'lucide-vue-next'
 
 const cartStore = useCartStore()
 const productStore = useProductStore()
+
+// Dummy wishlist for demonstration; replace with your actual wishlist logic/store
+const wishlist = ref<number[]>([])
 
 // Produkt in den Warenkorb
 function addToCart(product: Product) {

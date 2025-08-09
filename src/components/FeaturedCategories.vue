@@ -7,18 +7,20 @@
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         <div v-for="category in uniqueCategories" :key="category" class="group cursor-pointer">
-          <div
-            class="apple-card apple-shadow rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 ease-out"
-          >
-            <div class="relative h-48">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-              <div class="absolute bottom-4 left-4 right-4">
-                <h3 class="text-white text-lg font-medium capitalize">
-                  {{ category }}
-                </h3>
+          <router-link :to="`/catalog/${category}`">
+            <div
+              class="apple-card apple-shadow rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 ease-out"
+            >
+              <div class="relative h-48">
+                <div class="absolute inset-0 bg-gradient-to-br from-black/30 to-black/100"></div>
+                <div class="absolute bottom-4 left-4 right-4">
+                  <h3 class="text-white text-lg font-medium capitalize">
+                    {{ category }}
+                  </h3>
+                </div>
               </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
