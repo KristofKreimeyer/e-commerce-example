@@ -53,11 +53,10 @@
           <span class="text-xl font-semibold apple-text"> €{{ product.price }} </span>
           <ButtonComponent
             type="button"
-            size="md"
-            :disabled="false"
-            @click.stop="addToCart(product)"
+            size="sm"
             variant="outline"
-            class="cursor-pointer"
+            class="border border-gray-300 apple-text px-4 py-2 rounded-full hover:bg-gray-50 transition-all duration-300 cursor-pointer"
+            @click.stop="addToCart(product)"
           >
             <Plus class="w-4 h-4" />
           </ButtonComponent>
@@ -71,6 +70,7 @@
 import { useCartStore } from '@/stores/cartStore'
 import type { Product } from '@/stores/productStore'
 import { ref } from 'vue'
+import { Heart, Plus, Star } from 'lucide-vue-next'
 
 defineProps<{ product: Product }>()
 
