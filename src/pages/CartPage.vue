@@ -1,61 +1,72 @@
 <template>
   <div class="p-4">
-    <h1 class="text-5xl font-bold mb-4 text-center">Warenkorb</h1>
-    <div
-      class="border-top border-y-1 w-full py-5 flex justify-between"
-      v-for="item in cart.items"
-      :key="item.id"
-    >
-      <div>
-        <h2 class="text-2xl font-bold">{{ item.name }}</h2>
-        <p>{{ item.price * item.quantity }} €</p>
-
-        <div class="flex items-center space-x-2">
-          <button @click="decrease(item.id)" class="px-2 py-1 bg-gray-200">-</button>
-          <span class="mx-2">{{ item.quantity }}</span>
-          <button @click="increase(item.id)" class="px-2 py-1 bg-gray-200">+</button>
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <div
+          class="inline-flex items-center justify-center w-20 h-20 apple-card apple-blur apple-shadow rounded-3xl mb-6"
+        >
+          <ShoppingBag class="w-10 h-10 text-blue-600" />
         </div>
+        <h1 class="text-6xl font-bold gradient-text mb-4 font-sf">Warenkorb</h1>
       </div>
-      <div>
-        <img :src="item.image" alt="" class="w-1/4 h-auto aspect-square object-contain" />
-      </div>
-    </div>
-    <div v-if="cart.items.length">
-      <div v-for="item in cart.items" :key="item.id" class="mb-2 flex justify-between">
-        <div>{{ item.name }} (x{{ item.quantity }})</div>
 
-        <div>
-          {{ item.price * item.quantity }} €
-          <button @click="remove(item.id)" class="ml-2 text-red-500">Entfernen</button>
+      <transition-group name="fade" tag="div">
+        <div v-if="items.length > 0" key="cart-content" class="space-y-6">
+          <!-- Cart Items -->
+          <transition-group name="slide-up" tag="div" class="space-y-6">
+            <div
+              v-for="(item, index) in items"
+              :key="item.id"
+              class="item-card apple-shadow rounded-3xl p-8"
+              :style="{ animationDelay: index * 0.1 + 's' }"
+            >
+              <CartProductTile
+                :item="item"
+                :in-wishlist="wishlistIds.has(item.id)"
+                @increase="onIncrease"
+                @decrease="onDecrease"
+                @remove="remove"
+                @toggle-wishlist="toggleWishlist"
+              />
+            </div>
+          </transition-group>
+
+          <!-- Summary -->
+          <CartSummary :items="items" :totalPrice="totalPrice" />
         </div>
-      </div>
-      <div class="mt-4 font-bold">Gesamt: {{ cart.totalPrice }} €</div>
-      <button @click="checkout" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-        Jetzt kaufen
-      </button>
+
+        <!-- Empty -->
+        <div v-else key="empty-cart" class="text-center py-20">
+          <EmptyCart />
+        </div>
+      </transition-group>
     </div>
-    <div v-else>Der Warenkorb ist leer.</div>
   </div>
 </template>
 
 <script setup lang="ts">
+import CartProductTile from '@/components/cart/CartProductTile.vue'
+import CartSummary from '@/components/cart/CartSummary.vue'
+import EmptyCart from '@/components/cart/EmptyCart.vue'
 import { useCartStore } from '@/stores/cartStore'
+import { useWishlistStore } from '@/stores/wishlistStore'
+import { ShoppingBag } from 'lucide-vue-next'
+import { computed } from 'vue'
+
 const cart = useCartStore()
+const wishlist = useWishlistStore()
 
-const remove = (id: number) => {
-  cart.removeFromCart(id)
-}
+const items = computed(() => cart.items)
 
-const checkout = () => {
-  alert('Vielen Dank für deinen Einkauf!')
-  cart.clearCart()
-}
+const remove = (id: number) => cart.removeFromCart(id)
+const onIncrease = (id: number) => cart.incrementQuantity(id)
+const onDecrease = (id: number) => cart.decrementQuantity(id)
 
-const increase = (id: number) => {
-  cart.incrementQuantity(id)
-}
+const toggleWishlist = (id: number) => wishlist.toggle(id)
+const wishlistIds = computed(() => new Set(wishlist.ids))
 
-const decrease = (id: number) => {
-  cart.decrementQuantity(id)
-}
+const totalPrice = computed(() =>
+  cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+)
 </script>
