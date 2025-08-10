@@ -25,25 +25,30 @@
 
         <!-- Wishlist -->
         <div class="flex items-center space-x-3">
-          <button
-            class="p-2.5 text-gray-600 hover:text-blue-600 hover:bg-gray-100/50 rounded-full transition-all duration-300"
+          <ButtonComponent
+            type="button"
+            size="md"
+            variant="icon"
+            class="p-2.5 text-gray-700 hover:text-blue-700 rounded-full transition-all duration-300"
           >
             <Heart class="h-5 w-5" />
             <span class="sr-only">Wunschliste</span>
-          </button>
+          </ButtonComponent>
 
           <!-- Login -->
-          <button
-            class="p-2.5 text-gray-600 hover:text-blue-600 hover:bg-gray-100/50 rounded-full transition-all duration-300"
+          <ButtonComponent
+            type="button"
+            size="md"
+            variant="icon"
+            class="p-2.5 text-gray-600 hover:text-blue-600 rounded-full transition-all duration-300"
           >
             <User class="h-5 w-5" />
             <span class="sr-only">Login</span>
-          </button>
-
+          </ButtonComponent>
           <!-- Cart -->
           <router-link
             to="/cart"
-            class="relative p-2.5 text-gray-600 hover:text-blue-600 hover:bg-gray-100/50 rounded-full transition-all duration-300"
+            class="relative p-2.5 text-gray-600 hover:text-blue-600 rounded-full transition-all duration-300"
           >
             <ShoppingBag class="h-5 w-5" />
             <span class="sr-only">Warenkorb</span>
@@ -73,4 +78,5 @@ const cartCount = computed(() => {
 })
 
 import { ShoppingBag, Heart, User } from 'lucide-vue-next'
+import ButtonComponent from './ButtonComponent.vue'
 </script>

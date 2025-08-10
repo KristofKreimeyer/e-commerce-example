@@ -19,22 +19,16 @@
       <!-- Rating End -->
 
       <p class="text-2xl font-semibold my-8">{{ product?.price.toFixed(2) }} €</p>
-
-      <button
-        @click="
-          product &&
-          cart.addToCart({
-            id: product.id,
-            name: product.title,
-            price: product.price,
-            quantity: 1,
-            image: product.image,
-          })
-        "
-        class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full mb-8"
+      <ButtonComponent
+        type="button"
+        size="lg"
+        variant="primary"
+        class="apple-button text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg cursor-pointer w-full block text-center"
+        @click="product && addToCart(product)"
       >
         In den Warenkorb
-      </button>
+      </ButtonComponent>
+
       <p>Description:</p>
       <ul class="list-disc list-inside my-4">
         <li v-for="(item, index) in descriptionItems" :key="index">{{ item }}</li>
@@ -45,7 +39,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { useProductStore } from '@/stores/productStore'
+import { useProductStore, type Product } from '@/stores/productStore'
 import { computed, onMounted } from 'vue'
 import ProductGallery from '@/components/ProductGallery.vue'
 
@@ -78,4 +72,14 @@ onMounted(() => {
 
 import { useCartStore } from '@/stores/cartStore'
 const cart = useCartStore()
+
+const addToCart = (product: Product) => {
+  cart.addToCart({
+    id: product.id,
+    name: product.title,
+    price: product.price,
+    quantity: 1,
+    image: product.image,
+  })
+}
 </script>

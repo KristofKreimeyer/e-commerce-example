@@ -12,16 +12,23 @@
           Entdecke außergewöhnliche Produkte mit der Qualität und dem Design, die du verdienst.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            class="apple-button text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg"
+          <ButtonComponent
+            type="button"
+            size="lg"
+            variant="primary"
+            class="apple-button text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg cursor-pointer"
           >
             Kollektion entdecken
-          </button>
-          <button
-            class="border border-gray-300 apple-text px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-all duration-300"
+          </ButtonComponent>
+
+          <ButtonComponent
+            type="button"
+            size="lg"
+            variant="outline"
+            class="border border-gray-300 apple-text px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-all duration-300 cursor-pointer"
           >
             Mehr erfahren
-          </button>
+          </ButtonComponent>
         </div>
       </div>
     </div>
