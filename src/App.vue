@@ -7,6 +7,8 @@
     <!-- Seiteninhalt je nach Route -->
     <main class="w-full container mx-auto px-4 py-6">
       <RouterView />
+      <!-- Toast-Nachrichten -->
+      <ToastMessage />
     </main>
 
     <!-- Globaler Footer -->
@@ -18,4 +20,5 @@
 import { RouterView } from 'vue-router'
 import AppHeader from '@/layout/AppHeader.vue'
 import AppFooter from '@/layout/AppFooter.vue'
+import ToastMessage from './components/ToastMessage.vue'
 </script>

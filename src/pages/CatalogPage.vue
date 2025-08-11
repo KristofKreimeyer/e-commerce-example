@@ -15,7 +15,7 @@
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useProductStore } from '@/stores/productStore'
-import ProductCard from '@/components/ProductCard.vue'
+import ProductCard from '@/components/ProductTile.vue'
 
 const productStore = useProductStore()
 const { products, loading, error } = storeToRefs(productStore)

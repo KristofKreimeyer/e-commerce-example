@@ -20,7 +20,7 @@
 import { useCartStore } from '@/stores/cartStore'
 import { useProductStore, type Product } from '@/stores/productStore'
 import { computed, onMounted } from 'vue'
-import ProductCard from './ProductCard.vue'
+import ProductCard from './ProductTile.vue'
 
 const cartStore = useCartStore()
 const productStore = useProductStore()

@@ -10,11 +10,12 @@
           size="sm"
           variant="icon"
           class="absolute top-4 right-4 transition-all duration-500 cursor-pointer"
+          @click.stop.prevent="toggleWishlist(product.id)"
         >
           <Heart
             :class="[
               'w-5 h-5 transition-colors',
-              wishlist.includes(product.id)
+              wishlist.include(product.id)
                 ? 'text-red-700 fill-red-700'
                 : 'text-gray-700 hover:text-red-700',
             ]"
@@ -56,7 +57,7 @@
             size="sm"
             variant="outline"
             class="border border-gray-300 apple-text px-4 py-2 rounded-full hover:bg-gray-50 transition-all duration-300 cursor-pointer"
-            @click.stop="addToCart(product)"
+            @click.stop.prevent="addToCart(product)"
           >
             <Plus class="w-4 h-4" />
           </ButtonComponent>
@@ -69,23 +70,30 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cartStore'
 import type { Product } from '@/stores/productStore'
-import { ref } from 'vue'
 import { Heart, Plus, Star } from 'lucide-vue-next'
+import { useWishlistStore } from '@/stores/wishlistStore'
+import { useToast } from '@/hooks/useToast'
+import ButtonComponent from './ButtonComponent.vue'
+
+const { success } = useToast()
 
 defineProps<{ product: Product }>()
-
-// Dummy wishlist for demonstration; replace with your actual wishlist logic/store
-const wishlist = ref<number[]>([])
 
 const cartStore = useCartStore()
 
 function addToCart(product: Product) {
   cartStore.addToCart({
     id: product.id,
-    name: product.title, // assuming 'title' is the product name
+    name: product.title,
     price: product.price,
     quantity: 1,
     image: product.image,
   })
+  success(`„${product.title}“ wurde in den Warenkorb gelegt.`, {
+    actionLabel: 'Warenkorb öffnen',
+    position: 'top-center',
+  })
 }
+const wishlist = useWishlistStore()
+const toggleWishlist = (id: number) => wishlist.toggle(id)
 </script>

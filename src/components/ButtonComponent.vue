@@ -5,6 +5,8 @@
     :disabled="disabled || loading"
     class="inline-flex items-center justify-center rounded-full font-medium gap-2 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
     :class="[sizeClasses, variantClasses, loading ? 'cursor-wait' : 'cursor-pointer']"
+    @click="(ev) => emit('click', ev)"
+    v-bind="$attrs"
   >
     <slot />
   </button>
@@ -62,4 +64,8 @@ const variantClasses = computed(() => VARIANTS[props.variant])
 const sizeClasses = computed(() =>
   props.variant === 'icon' ? ICON_SIZES[props.size] : TEXT_SIZES[props.size],
 )
+
+const emit = defineEmits<{
+  (e: 'click', ev: MouseEvent): void
+}>()
 </script>

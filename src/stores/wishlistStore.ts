@@ -25,5 +25,8 @@ export const useWishlistStore = defineStore('wishlist', {
         this.ids = []
       }
     },
+    include(id: number) {
+      return this.ids.includes(id)
+    },
   },
 })
