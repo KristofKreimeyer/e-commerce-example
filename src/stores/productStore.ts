@@ -1,6 +1,6 @@
 // stores/productStore.ts
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 
 export interface Product {
   id: number
@@ -22,9 +22,11 @@ export const useProductStore = defineStore('product', () => {
   const loadedAt = ref<number | null>(null)
 
   // Der schnelle Lookup: id -> Product
-  const productsMap = computed<Map<number, Product>>(
-    () => new Map(products.value.map((p) => [p.id, p] as const)),
-  )
+  const productsMap = reactive(new Map<number, Product>())
+  function rebuildProductsMap(list: Product[]) {
+    productsMap.clear()
+    list.forEach((p) => productsMap.set(p.id, p))
+  }
 
   // Nützliche Derivate
   const categories = computed(() => {
@@ -32,8 +34,8 @@ export const useProductStore = defineStore('product', () => {
     return Array.from(set).sort((a, b) => a.localeCompare(b))
   })
 
-  const has = (id: number) => productsMap.value.has(id)
-  const byId = (id: number) => productsMap.value.get(id)
+  const has = (id: number) => productsMap.has(id)
+  const byId = (id: number) => productsMap.get(id)
 
   // Optional: kleine Suche/Filter (einfach gehalten)
   const search = (q: string) => {
@@ -59,10 +61,12 @@ export const useProductStore = defineStore('product', () => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const data = (await res.json()) as Product[]
       products.value = Array.isArray(data) ? data : []
+      rebuildProductsMap(products.value)
       loadedAt.value = Date.now()
     } catch (e: unknown) {
       error.value = e instanceof Error ? e.message : 'Unbekannter Fehler beim Laden der Produkte'
       products.value = []
+      productsMap.clear()
       loadedAt.value = null
     } finally {
       loading.value = false
@@ -72,6 +76,7 @@ export const useProductStore = defineStore('product', () => {
   // Für Tests/SSR/Seeding praktisch
   function setProducts(list: Product[]) {
     products.value = list ?? []
+    rebuildProductsMap(products.value)
     loadedAt.value = Date.now()
     error.value = null
   }
@@ -79,6 +84,7 @@ export const useProductStore = defineStore('product', () => {
   // Setup-Store hat kein $reset – also selbst definieren
   function reset() {
     products.value = []
+    productsMap.clear()
     loading.value = false
     error.value = null
     loadedAt.value = null
