@@ -22,4 +22,5 @@ import HeroSection from '@/components/HeroSection.vue'
 import FeatureSection from '@/components/FeatureSection.vue'
 import FeaturedCategories from '@/components/FeaturedCategories.vue'
 import FeaturedProducts from '@/components/FeaturedProducts.vue'
+import NewsletterComponent from '@/components/NewsletterComponent.vue'
 </script>

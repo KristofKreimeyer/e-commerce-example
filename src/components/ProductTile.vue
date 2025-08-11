@@ -15,7 +15,7 @@
           <Heart
             :class="[
               'w-5 h-5 transition-colors',
-              wishlist.include(product.id)
+              wishlist.has(product.id)
                 ? 'text-red-700 fill-red-700'
                 : 'text-gray-700 hover:text-red-700',
             ]"

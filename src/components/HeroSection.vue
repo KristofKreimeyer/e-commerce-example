@@ -34,3 +34,7 @@
     </div>
   </section>
 </template>
+
+<script lang="ts" setup>
+import ButtonComponent from './ButtonComponent.vue'
+</script>

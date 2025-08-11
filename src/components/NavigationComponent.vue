@@ -25,15 +25,20 @@
 
         <!-- Wishlist -->
         <div class="flex items-center space-x-3">
-          <ButtonComponent
-            type="button"
-            size="md"
-            variant="icon"
-            class="p-2.5 text-gray-700 hover:text-blue-700 rounded-full transition-all duration-300"
+          <router-link
+            to="/wishlist"
+            class="relative p-2.5 text-gray-600 hover:text-blue-600 rounded-full transition-all duration-300"
           >
-            <Heart class="h-5 w-5" />
-            <span class="sr-only">Wunschliste</span>
-          </ButtonComponent>
+            <ButtonComponent
+              type="button"
+              size="md"
+              variant="icon"
+              class="p-2.5 text-gray-700 hover:text-blue-700 rounded-full transition-all duration-300"
+            >
+              <Heart class="h-5 w-5" />
+              <span class="sr-only">Wunschliste</span>
+            </ButtonComponent>
+          </router-link>
 
           <!-- Login -->
           <ButtonComponent

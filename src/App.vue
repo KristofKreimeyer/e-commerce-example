@@ -21,4 +21,11 @@ import { RouterView } from 'vue-router'
 import AppHeader from '@/layout/AppHeader.vue'
 import AppFooter from '@/layout/AppFooter.vue'
 import ToastMessage from './components/ToastMessage.vue'
+import { useCartStore } from './stores/cartStore'
+import { onMounted } from 'vue'
+
+const cart = useCartStore()
+onMounted(() => {
+  cart.init()
+})
 </script>
