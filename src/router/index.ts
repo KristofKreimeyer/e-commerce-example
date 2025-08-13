@@ -51,14 +51,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  console.table(
-    to.matched.map((r) => ({
-      name: String(r.name),
-      path: r.path,
-      requiresAuth: Boolean(r.meta?.requiresAuth),
-    })),
-  )
-
   const requiresAuth = to.matched.some((r) => r.meta?.requiresAuth)
   const { token } = useAuth()
 

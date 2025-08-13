@@ -37,8 +37,6 @@ const email = ref('')
 
 const subscribeNewsletter = (): void => {
   if (email.value) {
-    console.log('Newsletter subscription:', email.value)
-    // Hier würdest du die Newsletter-Anmeldung verarbeiten
     email.value = ''
     alert('Vielen Dank für deine Anmeldung!')
   }

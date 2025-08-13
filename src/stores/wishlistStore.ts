@@ -32,9 +32,6 @@ export const useWishlistStore = defineStore(
     persist: {
       key: 'app:wishlist:v1',
       debug: true,
-      afterHydrate(context) {
-        console.log('Wishlist store hydrated:', context.store.$id, context.store.ids)
-      },
     },
   },
 )

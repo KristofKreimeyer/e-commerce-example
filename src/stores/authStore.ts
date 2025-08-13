@@ -57,7 +57,7 @@ export const useAuth = defineStore('auth', {
       router.replace({ path: '/signIn', query: { redirect: '/' } })
     },
     async register(email: string, password: string, name?: string) {
-      console.log('register', { email, password, name })
+      return { email, password, name }
     },
   },
   persist: { key: 'auth' },

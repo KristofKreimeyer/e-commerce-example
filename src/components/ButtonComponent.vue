@@ -5,7 +5,7 @@
     :disabled="disabled || loading"
     class="inline-flex items-center justify-center rounded-full font-medium gap-2 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
     :class="[sizeClasses, variantClasses, loading ? 'cursor-wait' : 'cursor-pointer']"
-    @click="(ev) => emit('click', ev)"
+    @click="(ev: any) => emit('click', ev)"
     v-bind="$attrs"
   >
     <slot />

@@ -47,7 +47,6 @@ import { useToast, type ToastPosition } from '@/hooks/useToast'
 
 const { toasts, dismiss } = useToast()
 
-// Gruppiere Toasts nach Position
 const toastsByPosition = computed(() => {
   return toasts.value.reduce(
     (groups, toast) => {
@@ -62,7 +61,6 @@ const toastsByPosition = computed(() => {
   )
 })
 
-// Generiere Container-Klassen basierend auf Position
 const getContainerClasses = (position: ToastPosition): string => {
   const positionClasses = {
     'top-left': 'top-4 left-4',

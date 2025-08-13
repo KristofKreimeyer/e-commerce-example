@@ -25,6 +25,4 @@ onMounted(() => {
     productStore.fetchProducts()
   }
 })
-
-console.log('Products:', products.value)
 </script>
