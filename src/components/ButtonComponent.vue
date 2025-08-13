@@ -1,4 +1,4 @@
-<!-- BaseButton.vue -->
+<!-- ButtonComponent.vue -->
 <template>
   <button
     :type="type"
