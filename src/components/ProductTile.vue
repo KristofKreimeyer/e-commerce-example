@@ -20,8 +20,8 @@
                 : 'text-gray-700 hover:text-red-700',
             ]"
           />
+          <span class="sr-only">Zum Wunschzettel hinzufügen</span>
         </ButtonComponent>
-        <span class="sr-only">Zum Wunschzettel hinzufügen</span>
       </div>
 
       <div class="p-6 pt-0">
@@ -60,6 +60,7 @@
             @click.stop.prevent="addToCart(product)"
           >
             <Plus class="w-4 h-4" />
+            <span class="sr-only">In den Warenkorb legen</span>
           </ButtonComponent>
         </div>
       </div>

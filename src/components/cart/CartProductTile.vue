@@ -82,7 +82,7 @@
       type="button"
       @click="$emit('remove', item.id)"
       variant="outline"
-      class="group flex items-center space-x-2 px-6 py-3 bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 rounded-2xl hover:shadow-lg"
+      class="group flex items-center space-x-2 px-6 py-3 bg-red-50 hover:bg-red-100 text-red-[#db000a] hover:text-red-700 rounded-2xl hover:shadow-lg"
       aria-label="Artikel aus dem Warenkorb entfernen"
     >
       <Trash class="w-5 h-5" />
