@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-white border-t border-gray-200/50 py-16">
+  <footer class="bg-white border-t border-gray-200/50 py-16 text-center">
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
         <div>
@@ -49,6 +49,4 @@
   </footer>
 </template>
 
-<script setup lang="ts">
-// Keine zusätzlichen Skripte erforderlich, da die Navigation über Vue Router funktioniert
-</script>
+<script setup lang="ts"></script>

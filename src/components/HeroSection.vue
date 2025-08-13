@@ -17,7 +17,7 @@
               type="button"
               size="lg"
               variant="primary"
-              class="apple-button text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg cursor-pointer"
+              class="apple-button w-full md:inline-block text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg cursor-pointer"
             >
               Kollektion entdecken
             </ButtonComponent>

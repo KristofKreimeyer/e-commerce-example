@@ -41,7 +41,7 @@
 import { useRoute } from 'vue-router'
 import { useProductStore, type Product } from '@/stores/productStore'
 import { computed, onMounted } from 'vue'
-import ProductGallery from '@/components/ProductGallery.vue'
+import ProductGallery from '@/components/product/ProductGallery.vue'
 
 const route = useRoute()
 const productStore = useProductStore()

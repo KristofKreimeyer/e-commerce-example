@@ -74,7 +74,7 @@ import type { Product } from '@/stores/productStore'
 import { Heart, Plus, Star } from 'lucide-vue-next'
 import { useWishlistStore } from '@/stores/wishlistStore'
 import { useToast } from '@/hooks/useToast'
-import ButtonComponent from './ButtonComponent.vue'
+import ButtonComponent from '../ButtonComponent.vue'
 
 const { success } = useToast()
 
