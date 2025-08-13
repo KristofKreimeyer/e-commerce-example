@@ -4,7 +4,24 @@
       <div class="flex justify-between items-center py-4">
         <div class="flex items-center space-x-4">
           <div class="text-2xl font-semibold apple-text">
-            <router-link to="/">ShopHub</router-link>
+            <RouterLink
+              to="/"
+              aria-label="ShopHub Startseite"
+              class="inline-flex items-center select-none overflow-hidden leading-none transition-all duration-200 hover:shadow-sm hover:-translate-y-[1px]"
+            >
+              <span
+                class="text-black font-semibold tracking-tight pl-3 pr-1 py-1.5 text-[1.15rem] md:text-[1.25rem]"
+              >
+                Shop
+              </span>
+
+              <span
+                class="bg-[#f90] text-black rounded-sm font-semibold tracking-tight px-3 py-1.5 text-[1.15rem] md:text-[1.25rem]"
+              >
+                hub
+              </span>
+              <span class="sr-only">ShopHub Logo</span>
+            </RouterLink>
           </div>
         </div>
 
@@ -13,13 +30,7 @@
             to="/catalog"
             class="apple-text hover:text-blue-600 transition-colors duration-300"
           >
-            Kategorien
-          </router-link>
-          <router-link
-            to="/support"
-            class="apple-text hover:text-blue-600 transition-colors duration-300"
-          >
-            Support
+            Katalog
           </router-link>
         </div>
 
@@ -41,15 +52,21 @@
           </router-link>
 
           <!-- Login -->
-          <ButtonComponent
-            type="button"
-            size="md"
-            variant="icon"
-            class="p-2.5 text-gray-600 hover:text-blue-600 rounded-full transition-all duration-300"
+          <router-link
+            to="/account"
+            class="relative p-2.5 text-gray-600 hover:text-blue-600 rounded-full transition-all duration-300"
           >
-            <User class="h-5 w-5" />
-            <span class="sr-only">Login</span>
-          </ButtonComponent>
+            <ButtonComponent
+              type="button"
+              size="md"
+              variant="icon"
+              class="p-2.5 text-gray-600 hover:text-blue-600 rounded-full transition-all duration-300"
+            >
+              <User class="h-5 w-5" />
+              <span class="sr-only">Login</span>
+            </ButtonComponent>
+          </router-link>
+
           <!-- Cart -->
           <router-link
             to="/cart"
