@@ -39,6 +39,7 @@
           Demo füllen
         </button>
       </div>
+      <router-link to="signUp">Noch keinen Account ? Erstell dir hier einen !</router-link>
 
       <p v-if="auth.error" class="text-sm text-red-600" role="alert">{{ auth.error }}</p>
     </form>

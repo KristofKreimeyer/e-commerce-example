@@ -4,8 +4,10 @@ import ProductDetail from '@/pages/ProductDetail.vue'
 import CartPage from '@/pages/CartPage.vue'
 import CatalogPage from '@/pages/CatalogPage.vue'
 import Wishlist from '@/pages/Wishlist.vue'
-import Account from '@/components/account/AccountView.vue'
+import Account from '@/pages/AccountPage.vue'
 import { useAuth } from '@/stores/authStore'
+import SignIn from '@/components/account/LoginView.vue'
+import SignUp from '@/components/account/RegisterView.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomePage, meta: { title: 'Startseite' } },
@@ -32,13 +34,13 @@ const routes = [
   {
     path: '/signIn',
     name: 'SignIn',
-    component: () => import('@/components/account/LoginView.vue'),
+    component: SignIn,
     meta: { title: 'Login' },
   },
   {
     path: '/signUp',
     name: 'SignUp',
-    component: () => import('@/components/account/RegisterView.vue'),
+    component: SignUp,
     meta: { title: 'Registrieren' },
   },
 ]
