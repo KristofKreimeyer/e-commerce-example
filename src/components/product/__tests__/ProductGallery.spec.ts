@@ -13,15 +13,25 @@ vi.mock('swiper/css/zoom', () => ({}))
 vi.mock('swiper/vue', () => {
   const Swiper = {
     name: 'Swiper',
-    // wichtig: Event definieren, damit $emit('swiper') valid ist
+    // 👉 Props explizit deklarieren, damit VTU sie über .props() sieht
+    props: {
+      navigation: { type: [Boolean, Object], default: undefined },
+      spaceBetween: { type: Number, default: undefined },
+      slidesPerView: { type: [Number, String], default: undefined },
+      watchSlidesProgress: { type: Boolean, default: undefined },
+      modules: { type: Array, default: () => [] },
+      thumbs: { type: Object, default: undefined },
+    },
     emits: ['swiper'],
-    // attrs übernehmen, damit class="mySwiper2" / "mySwiper" am Container landet
+    // class / style etc. aus $attrs weiterreichen (für .mySwiper2/.mySwiper Selektoren)
     template: `<div class="swiper" v-bind="$attrs"><slot/></div>`,
   }
+
   const SwiperSlide = {
     name: 'SwiperSlide',
     template: `<div class="swiper-slide"><slot/></div>`,
   }
+
   return { Swiper, SwiperSlide }
 })
 

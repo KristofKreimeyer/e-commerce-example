@@ -1,16 +1,39 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import Component from '../AppHeader.vue'
 
-describe('AppHeader', () => {
-  it('renders without crashing (smoke)', () => {
-    const wrapper = mount(Component)
-    expect(wrapper.exists()).toBe(true)
+// ⚠️ Pfad anpassen
+import AppHeader from '../AppHeader.vue'
+
+// Stub für die Navigation (vermeidet Router/Pinia-Fehler)
+const NavigationStub = {
+  name: 'NavigationComponent',
+  template: `<nav data-test="nav-stub">NAV</nav>`,
+}
+
+const mountHeader = () =>
+  mount(AppHeader, {
+    global: {
+      stubs: {
+        NavigationComponent: NavigationStub,
+        transition: false,
+        'transition-group': false,
+      },
+    },
   })
 
-  it('renders default slot content if any', () => {
-    const wrapper = mount(Component, { slots: { default: 'Hello' } })
-    // Falls die Komponente Slots rendert, sieht man "Hello", sonst kein Fehler.
-    expect(wrapper.text()).toContain('Hello')
+describe('AppHeader.vue', () => {
+  it('rendert ohne Fehler und enthält ein <header>', () => {
+    const wrapper = mountHeader()
+    expect(wrapper.exists()).toBe(true)
+    const header = wrapper.get('header')
+    expect(header.classes()).toContain('p-4')
+  })
+
+  it('bindet NavigationComponent genau einmal ein', () => {
+    const wrapper = mountHeader()
+    const nav = wrapper.findAllComponents(NavigationStub)
+    expect(nav).toHaveLength(1)
+    // und der Stub ist sichtbar
+    expect(wrapper.find('[data-test="nav-stub"]').exists()).toBe(true)
   })
 })

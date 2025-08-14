@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { nextTick } from 'vue'
+import { reactive, nextTick } from 'vue'
 
-// ---- Mocks: Stores ----
+// ---- Reaktiver Store-State ----
 type P = {
   id: number
   title: string
@@ -11,14 +11,15 @@ type P = {
   rating: { rate: number; count: number }
 }
 
-let mockProducts: P[] = []
+const state = reactive<{ products: P[] }>({ products: [] })
 const fetchProductsMock = vi.fn()
 const addToCartMock = vi.fn()
 
 vi.mock('@/stores/productStore', () => ({
   useProductStore: () => ({
     get products() {
-      return mockProducts
+      // über reactive state → echte Reaktivität
+      return state.products
     },
     fetchProducts: fetchProductsMock,
   }),
@@ -32,7 +33,7 @@ vi.mock('@/stores/cartStore', () => ({
 
 import FeaturedProducts from '../FeaturedProducts.vue'
 
-// ---- Child-Stub: ProductCard (wir testen hier die Sektion, nicht die Kachel selbst) ----
+// ---- Child-Stub: ProductCard ----
 const ProductCardStub = {
   name: 'ProductCard',
   props: { product: { type: Object, required: true } },
@@ -42,32 +43,33 @@ const ProductCardStub = {
   </div>`,
 }
 
-describe('FeaturedProducts.vue', () => {
-  beforeEach(() => {
-    fetchProductsMock.mockReset()
-    addToCartMock.mockReset()
-    // 6 Produkte mit unterschiedlichen Ratings (damit Slice & Sort geprüft werden können)
-    mockProducts = [
-      { id: 1, title: 'A', image: '/a.png', price: 10, rating: { rate: 3.1, count: 10 } },
-      { id: 2, title: 'B', image: '/b.png', price: 12, rating: { rate: 4.9, count: 99 } },
-      { id: 3, title: 'C', image: '/c.png', price: 8, rating: { rate: 2.0, count: 5 } },
-      { id: 4, title: 'D', image: '/d.png', price: 20, rating: { rate: 4.2, count: 31 } },
-      { id: 5, title: 'E', image: '/e.png', price: 18, rating: { rate: 4.2, count: 42 } },
-      { id: 6, title: 'F', image: '/f.png', price: 14, rating: { rate: 3.9, count: 17 } },
-    ]
+const mountComp = () =>
+  mount(FeaturedProducts, {
+    global: {
+      stubs: {
+        ProductCard: ProductCardStub,
+        transition: false,
+        'transition-group': false,
+      },
+    },
   })
 
-  const mountComp = () =>
-    mount(FeaturedProducts, {
-      global: {
-        stubs: {
-          ProductCard: ProductCardStub,
-          transition: false,
-          'transition-group': false,
-          // Router wird hier nicht genutzt – kein router-link nötig
-        },
-      },
-    })
+// Hilfsdaten
+const seededProducts: P[] = [
+  { id: 1, title: 'A', image: '/a.png', price: 10, rating: { rate: 3.1, count: 10 } },
+  { id: 2, title: 'B', image: '/b.png', price: 12, rating: { rate: 4.9, count: 99 } },
+  { id: 3, title: 'C', image: '/c.png', price: 8, rating: { rate: 2.0, count: 5 } },
+  { id: 4, title: 'D', image: '/d.png', price: 20, rating: { rate: 4.2, count: 31 } },
+  { id: 5, title: 'E', image: '/e.png', price: 18, rating: { rate: 4.2, count: 42 } },
+  { id: 6, title: 'F', image: '/f.png', price: 14, rating: { rate: 3.9, count: 17 } },
+]
+
+describe('FeaturedProducts.vue', () => {
+  beforeEach(() => {
+    state.products = [...seededProducts]
+    fetchProductsMock.mockReset()
+    addToCartMock.mockReset()
+  })
 
   it('rendert Headline und Subtext', () => {
     const wrapper = mountComp()
@@ -80,21 +82,13 @@ describe('FeaturedProducts.vue', () => {
     const wrapper = mountComp()
     const cards = wrapper.findAll('[data-test="product-card"]')
     expect(cards).toHaveLength(4)
-
-    // Erwartete Top-4: B(4.9), D(4.2), E(4.2), F(3.9)
-    const titles = cards.map((c) => c.text().trim())
-    expect(titles).toEqual(['B', 'D', 'E', 'F'])
+    expect(cards.map((c) => c.text().trim())).toEqual(['B', 'D', 'E', 'F'])
   })
 
-  it('verkabelt add-to-cart: emit aus ProductCard ruft cartStore.addToCart mit gemappten Feldern', async () => {
+  it('verkabelt add-to-cart korrekt', async () => {
     const wrapper = mountComp()
-    // Nimm das erste (Best-Rated) Produkt – in unserer Sortierung "B"
-    const firstCard = wrapper.findAll('[data-test="product-card"]')[0]
-    await firstCard.trigger('click') // unser Stub emittiert damit "add-to-cart"
-
-    expect(addToCartMock).toHaveBeenCalledTimes(1)
-    const arg = addToCartMock.mock.calls[0][0]
-    expect(arg).toMatchObject({
+    await wrapper.findAll('[data-test="product-card"]')[0].trigger('click')
+    expect(addToCartMock).toHaveBeenCalledWith({
       id: 2,
       name: 'B',
       price: 12,
@@ -104,20 +98,21 @@ describe('FeaturedProducts.vue', () => {
   })
 
   it('ruft fetchProducts() beim Mount auf, wenn keine Produkte vorliegen', async () => {
-    mockProducts = [] // leer -> featuredProducts wäre initial leer
-    const wrapper = mountComp()
-    await nextTick()
-    expect(fetchProductsMock).toHaveBeenCalledTimes(1)
+    state.products = [] // leer
+    // fetch füllt den reaktiven State (so wie es echte Pinia-Action tun würde)
+    fetchProductsMock.mockImplementation(() => {
+      state.products = [
+        { id: 9, title: 'Z', image: '/z.png', price: 11, rating: { rate: 4.8, count: 50 } },
+        { id: 10, title: 'Y', image: '/y.png', price: 13, rating: { rate: 4.1, count: 10 } },
+        { id: 11, title: 'X', image: '/x.png', price: 17, rating: { rate: 3.9, count: 20 } },
+        { id: 12, title: 'W', image: '/w.png', price: 15, rating: { rate: 3.5, count: 5 } },
+      ]
+    })
 
-    // Wenn danach Produkte „kommen“, sollte gerendert werden
-    mockProducts = [
-      { id: 9, title: 'Z', image: '/z.png', price: 11, rating: { rate: 4.8, count: 50 } },
-      { id: 10, title: 'Y', image: '/y.png', price: 13, rating: { rate: 4.1, count: 10 } },
-      { id: 11, title: 'X', image: '/x.png', price: 17, rating: { rate: 3.9, count: 20 } },
-      { id: 12, title: 'W', image: '/w.png', price: 15, rating: { rate: 3.5, count: 5 } },
-    ]
-    // Re-Render (einfacher nudge)
-    await wrapper.vm.$forceUpdate()
+    const wrapper = mountComp()
+    expect(fetchProductsMock).toHaveBeenCalledTimes(1)
+    await nextTick()
+
     const cards = wrapper.findAll('[data-test="product-card"]')
     expect(cards).toHaveLength(4)
   })

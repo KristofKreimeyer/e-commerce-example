@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
-      <ProductGallery v-if="product?.images?.length" :images="product.images" />
+      <ProductGallery v-if="product?.image" :images="[product.image]" />
     </div>
     <div>
       <p class="text-lg font-semibold rounded border inline-block p-1">{{ product?.category }}</p>

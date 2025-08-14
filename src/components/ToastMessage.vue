@@ -1,6 +1,5 @@
 <template>
   <Teleport to="body">
-    <!-- Gruppiere Toasts nach Position -->
     <div
       v-for="(groupedToasts, position) in toastsByPosition"
       :key="position"
